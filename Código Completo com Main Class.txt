@@ -1,0 +1,107 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+// Classe Cliente
+class Cliente {
+    private String nome;
+    private String email;
+    private String cpf;
+    private String numero;
+
+    public Cliente(String nome, String email, String cpf, String numero) {
+        this.nome = nome;
+        this.email = email;
+        this.cpf = cpf;
+        this.numero = numero;
+    }
+
+    // Getters
+    public String getNome() {
+        return nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    // Setters
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+}
+
+// Classe RegistroClientes
+class RegistroClientes {
+    private Map<String, Cliente> clientes;
+    private Scanner scanner;
+
+    public RegistroClientes() {
+        this.clientes = new HashMap<>();
+        this.scanner = new Scanner(System.in);
+    }
+
+    public void registrarClientes() {
+        boolean continuar = true;
+        while (continuar) {
+            System.out.println("Digite as informações do cliente (Nome, E-mail, CPF, Número):");
+            String nome = scanner.nextLine();
+            String email = scanner.nextLine();
+            String cpf = scanner.nextLine();
+            String numero = scanner.nextLine();
+
+            Cliente novoCliente = new Cliente(nome, email, cpf, numero);
+            clientes.put(cpf, novoCliente);
+
+            System.out.println("Cliente registrado com sucesso!");
+            System.out.println("Deseja registrar outro cliente? (s/n)");
+            String resposta = scanner.nextLine();
+            continuar = resposta.equalsIgnoreCase("s");
+        }
+    }
+
+    public void buscarClientePorCPF() {
+        System.out.println("Digite o CPF do cliente que deseja buscar:");
+        String cpfBusca = scanner.nextLine();
+
+        if (clientes.containsKey(cpfBusca)) {
+            Cliente cliente = clientes.get(cpfBusca);
+            System.out.println("Cliente encontrado:");
+            System.out.println("Nome: " + cliente.getNome());
+            System.out.println("E-mail: " + cliente.getEmail());
+            System.out.println("CPF: " + cliente.getCpf());
+            System.out.println("Número: " + cliente.getNumero());
+        } else {
+            System.out.println("Cliente não encontrado.");
+        }
+    }
+}
+
+// Classe Aplicacao
+public class Aplicacao {
+    public static void main(String[] args) {
+        RegistroClientes registroClientes = new RegistroClientes();
+        registroClientes.registrarClientes();
+        registroClientes.buscarClientePorCPF();
+    }
+}
